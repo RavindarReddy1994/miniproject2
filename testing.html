@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="sample.css">
+    
+    <script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="jquery-1.12.1.min.js"></script>
+
+</head>
+  <body>
+      <div id="header1">
+          <ul id="nav1"> 
+        <li><a class="ex1" href="register.php">sign up</a></li>
+        <li><a class="ex1" href="index.php">log-in</a></li>
+          </ul>
+          <div id="img">
+              <img src="stp.jpg" height="105px" width="250px">
+          </div>
+          <div><center><font size="5">Make a difference for those who are in Need</font></center></div>
+      </div>
+        <div id="navg">
+        <ul id="nav"> 
+        <li><a href="site.php">Home</a></li>
+        <li><a href="what we do.html" target="blank">what we do</a></li>
+        <li><a href="fact.html">facts</a></li>
+        <li><a href="aboutus.html">about us</a></li>
+        </ul>
+        </div>
+    <div class="slider" id="main-slider"><!-- outermost container element -->
+	<div class="slider-wrapper"><!-- innermost wrapper element -->
+		<img src="mp1.jpg" alt="First" class="slide" /><!-- slides -->
+		<img src="mp11.jpg" alt="Second" class="slide" />
+		<img src="mp12.jpg" alt="Third" class="slide" />
+	</div>
+</div>
+    <style>html,body {
+	margin: 0;
+	padding: 0;
+}
+.slider {
+	width: 1024px;
+	margin: 2em auto;
+	
+}
+
+.slider-wrapper {
+	width: 100%;
+	height: 400px;
+	position: relative;
+}
+
+.slide {
+	float: left;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 3s linear;
+}
+
+.slider-wrapper > .slide:first-child {
+	opacity: 1;
+}
+    </style>
+    <script>
+(function() {
+	
+	function Slideshow( element ) {
+		this.el = document.querySelector( element );
+		this.init();
+	}
+	
+	Slideshow.prototype = {
+		init: function() {
+			this.wrapper = this.el.querySelector( ".slider-wrapper" );
+			this.slides = this.el.querySelectorAll( ".slide" );
+			this.previous = this.el.querySelector( ".slider-previous" );
+			this.next = this.el.querySelector( ".slider-next" );
+			this.index = 0;
+			this.total = this.slides.length;
+			this.timer = null;
+			
+			this.action();
+			this.stopStart();	
+		},
+		_slideTo: function( slide ) {
+			var currentSlide = this.slides[slide];
+			currentSlide.style.opacity = 1;
+			
+			for( var i = 0; i < this.slides.length; i++ ) {
+				var slide = this.slides[i];
+				if( slide !== currentSlide ) {
+					slide.style.opacity = 0;
+				}
+			}
+		},
+		action: function() {
+			var self = this;
+			self.timer = setInterval(function() {
+				self.index++;
+				if( self.index == self.slides.length ) {
+					self.index = 0;
+				}
+				self._slideTo( self.index );
+				
+			}, 3000);
+		},
+		stopStart: function() {
+			var self = this;
+			self.el.addEventListener( "mouseover", function() {
+				clearInterval( self.timer );
+				self.timer = null;
+				
+			}, false);
+			self.el.addEventListener( "mouseout", function() {
+				self.action();
+				
+			}, false);
+		}
+		
+		
+	};
+	
+	document.addEventListener( "DOMContentLoaded", function() {
+		
+		var slider = new Slideshow( "#main-slider" );
+		
+	});
+	
+	
+})();
+    </script>
+
+    
+
+<script src="../jquery-1.4.2.min.js"></script>
+
+<script>
+$(window).load(function(){
+		var pages = $('#container li'), current=0;
+		var currentPage,nextPage;
+		var handler=function(){
+			$('#container .button').unbind('click');
+			currentPage= pages.eq(current);
+			if($(this).hasClass('prevButton'))
+			{
+				if (current <= 0)
+					current=pages.length-1;
+				else
+					current=current-1;
+			}
+			else
+			{
+
+				if (current >= pages.length-1)
+					current=0;
+				else
+					current=current+1;
+			}
+			nextPage = pages.eq(current);	
+			currentPage.fadeTo('slow',0.3,function(){
+				nextPage.fadeIn('slow',function(){
+					nextPage.css("opacity",1);
+					currentPage.hide();
+					currentPage.css("opacity",1);
+					$('#container .button').bind('click',handler);
+				});	
+			});
+		}
+
+		$('#container .button').click(handler);
+		
+});
+
+</script>
+      <div id="footer">
+<font size="5">If U Can't feed a hundred then just feed one</font>
+
+</div>
+      
+ </body>
+</html>
